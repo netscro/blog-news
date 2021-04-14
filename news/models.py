@@ -9,6 +9,7 @@ class Category(models.Model):
                          max_length=100,
                          unique=True,
                          verbose_name='URL')
+    publish = models.BooleanField(default=True)
 
     seo_title = models.CharField(max_length=100, unique=True, null=True)
     seo_description = models.CharField(max_length=180, unique=True, blank=True)
@@ -33,6 +34,7 @@ class Post(models.Model):
                          unique=True,
                          verbose_name='URL')
     image = models.ImageField(upload_to='pictures', null=True, blank=True)
+    publish = models.BooleanField(default=True)
 
     seo_title = models.CharField(max_length=100, unique=True, null=True)
     seo_description = models.CharField(max_length=180, unique=True, blank=True)

@@ -10,6 +10,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'slug',
         'seo_title',
         'seo_description',
+        'publish',
     )
     search_fields = (
         'name',
@@ -26,6 +27,7 @@ class PostAdmin(admin.ModelAdmin):
         'seo_title',
         'seo_description',
         'created_at',
+        'publish',
     )
     search_fields = (
         'title',
@@ -39,6 +41,3 @@ class CommentAdmin(admin.ModelAdmin):
         'author',
         'created_at',
     )
-    # search_fields = (
-    #     'name',
-    # )
