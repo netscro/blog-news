@@ -63,4 +63,3 @@ class Comment(models.Model):
     def __str__(self):
         date_only = self.created_at.strftime("%d:%M-%Y")
         return f'{self.for_news} - {date_only}'
-

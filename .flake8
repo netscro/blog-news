@@ -1,4 +1,5 @@
 [flake8]
 exclude =
+    app/settings.py
     news/tests.py,
     news/migrations/*.py
