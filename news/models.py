@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -25,7 +26,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    article = models.TextField(blank=True, null=True)
+    article = RichTextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
