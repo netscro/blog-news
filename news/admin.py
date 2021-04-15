@@ -47,3 +47,6 @@ class CommentAdmin(admin.ModelAdmin):
         'author',
         'created_at',
     )
+
+
+admin.site.site_header = 'Blog-News'
