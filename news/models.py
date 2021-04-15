@@ -1,15 +1,14 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django_extensions.db.fields import AutoSlugField
 from ckeditor.fields import RichTextField
+from django.utils.safestring import mark_safe
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    slug = AutoSlugField(populate_from='name',
-                         max_length=100,
-                         unique=True,
-                         verbose_name='URL')
+    slug = models.SlugField(max_length=100,
+                            unique=True,
+                            verbose_name='URL')
     publish = models.BooleanField(default=True)
 
     seo_title = models.CharField(max_length=100, unique=True, null=True)
@@ -26,14 +25,13 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=100,
+                            unique=True,
+                            verbose_name='URL')
     article = RichTextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    slug = AutoSlugField(populate_from='title',
-                         max_length=200,
-                         unique=True,
-                         verbose_name='URL')
     image = models.ImageField(upload_to='pictures', null=True, blank=True)
     publish = models.BooleanField(default=True)
 
@@ -48,6 +46,11 @@ class Post(models.Model):
     def __str__(self):
         date_only = self.created_at.strftime("%d:%M-%Y")
         return f'{self.title} - {date_only}'
+
+    # show Image from Imagefield
+    def image_display(self):
+        return mark_safe(f'<img src={self.image.url} '
+                         f'width="200" height="240" />')
 
 
 class Comment(models.Model):

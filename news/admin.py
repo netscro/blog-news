@@ -16,6 +16,8 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
 
+    prepopulated_fields = {'slug': ('name',)}
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -32,6 +34,10 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = (
         'title',
     )
+
+    prepopulated_fields = {'slug': ('title',)}
+    # show Image from Imagefield
+    readonly_fields = ('image_display',)
 
 
 @admin.register(Comment)
