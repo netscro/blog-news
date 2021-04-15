@@ -7,18 +7,30 @@ import django_extensions.db.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('news', '0004_alter_post_image'),
+        ("news", "0004_alter_post_image"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, max_length=100, populate_from='name', unique=True),
+            model_name="category",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True,
+                editable=False,
+                max_length=100,
+                populate_from="name",
+                unique=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, max_length=200, populate_from='title', unique=True),
+            model_name="post",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True,
+                editable=False,
+                max_length=200,
+                populate_from="title",
+                unique=True,
+            ),
         ),
     ]

@@ -7,28 +7,42 @@ import django_extensions.db.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('news', '0006_alter_comment_text'),
+        ("news", "0006_alter_comment_text"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='category',
-            name='publish',
+            model_name="category",
+            name="publish",
             field=models.BooleanField(default=True),
         ),
         migrations.AddField(
-            model_name='post',
-            name='publish',
+            model_name="post",
+            name="publish",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, max_length=100, populate_from='name', unique=True, verbose_name='URL'),
+            model_name="category",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True,
+                editable=False,
+                max_length=100,
+                populate_from="name",
+                unique=True,
+                verbose_name="URL",
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, max_length=200, populate_from='title', unique=True, verbose_name='URL'),
+            model_name="post",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True,
+                editable=False,
+                max_length=200,
+                populate_from="title",
+                unique=True,
+                verbose_name="URL",
+            ),
         ),
     ]

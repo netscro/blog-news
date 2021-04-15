@@ -10,58 +10,81 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('news', '0001_initial'),
+        ("news", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='category',
-            name='seo_description',
+            model_name="category",
+            name="seo_description",
             field=models.CharField(blank=True, max_length=180, unique=True),
         ),
         migrations.AddField(
-            model_name='category',
-            name='seo_title',
+            model_name="category",
+            name="seo_title",
             field=models.CharField(max_length=100, null=True, unique=True),
         ),
         migrations.AddField(
-            model_name='post',
-            name='seo_description',
+            model_name="post",
+            name="seo_description",
             field=models.CharField(blank=True, max_length=180, unique=True),
         ),
         migrations.AddField(
-            model_name='post',
-            name='seo_title',
+            model_name="post",
+            name="seo_title",
             field=models.CharField(max_length=100, null=True, unique=True),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, populate_from='name', unique=True),
+            model_name="category",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True, editable=False, populate_from="name", unique=True
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='article',
+            model_name="post",
+            name="article",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='slug',
-            field=django_extensions.db.fields.AutoSlugField(blank=True, editable=False, populate_from='title', unique=True),
+            model_name="post",
+            name="slug",
+            field=django_extensions.db.fields.AutoSlugField(
+                blank=True, editable=False, populate_from="title", unique=True
+            ),
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(max_length=500, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, null=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('for_news', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news.post')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.CharField(max_length=500, null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True, null=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "for_news",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="news.post"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Comment',
-                'verbose_name_plural': 'Comments',
-                'ordering': ['-created_at'],
+                "verbose_name": "Comment",
+                "verbose_name_plural": "Comments",
+                "ordering": ["-created_at"],
             },
         ),
     ]

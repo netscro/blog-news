@@ -16,8 +16,29 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+
+from news.views import PostViewSet, CategoryViewSet, CommentViewSet
+
+# urls for drf
+router = routers.DefaultRouter()
+router.register(
+    r"category-api",
+    CategoryViewSet,
+)
+router.register(
+    r"posts-api",
+    PostViewSet,
+)
+router.register(
+    r"comments-api",
+    CommentViewSet,
+)
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    # drf main page
+    path("drf/", include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
