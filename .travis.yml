@@ -2,6 +2,10 @@ language: python
 python:
   - "3.8"
 
+branches:
+  only:
+  - /.*/
+
 install:
   - pip install --upgrade pip
   - pip install poetry
