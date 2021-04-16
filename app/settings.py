@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # installed apps
     "django_extensions",
     "ckeditor",
+    "ckeditor_uploader",
     "rest_framework",
     "django_filters",
 ]
@@ -128,6 +129,8 @@ STATIC_URL = "/static/"
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "media/"
+
+CKEDITOR_UPLOAD_PATH = "pictures/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

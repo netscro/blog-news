@@ -40,5 +40,6 @@ router.register(
 urlpatterns = [
     path("admin/", admin.site.urls),
     # drf main page
-    path("drf/", include(router.urls)),
+    path('drf/', include(router.urls)),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

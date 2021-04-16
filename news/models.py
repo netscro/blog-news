@@ -1,6 +1,6 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
-from ckeditor.fields import RichTextField
 from django.utils.safestring import mark_safe
 
 
@@ -24,7 +24,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=100, unique=True, verbose_name="URL")
-    article = RichTextField(blank=True, null=True)
+    article = RichTextUploadingField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
