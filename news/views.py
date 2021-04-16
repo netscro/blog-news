@@ -1,4 +1,7 @@
+from django.shortcuts import render
+from django.views import View
 from rest_framework import viewsets, permissions
+from rest_framework.parsers import JSONParser
 
 from news.models import Post, Category, Comment
 from news.serializers import PostSerializer, \
@@ -25,3 +28,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class TestAPI(View):
+    def get(self, request):
+        return render(request, 'test_drf_api.html')

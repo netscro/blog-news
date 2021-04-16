@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from news.views import PostViewSet, CategoryViewSet, CommentViewSet
+from news.views import PostViewSet, CategoryViewSet, CommentViewSet, TestAPI
 
 # urls for drf
 router = routers.DefaultRouter()
@@ -39,7 +39,8 @@ router.register(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("test/", TestAPI.as_view(), name='test'),
     # drf main page
-    path('drf/', include(router.urls)),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path("drf/", include(router.urls)),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -38,6 +38,17 @@ python-versions = "*"
 django-js-asset = ">=1.2.2"
 
 [[package]]
+name = "django-cors-headers"
+version = "3.7.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "django-extensions"
 version = "3.1.2"
 description = "Extensions for Django"
@@ -155,7 +166,7 @@ python-versions = ">=3.5"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2ce7992f6c6c77d62d0cbcad96f1903c57c43652d62e051a9dbb3f191a0f90a4"
+content-hash = "4af88a654fc6e797e4bf9978524663f3eca02374096b3e45a16cae5286655876"
 
 [metadata.files]
 asgiref = [
@@ -169,6 +180,10 @@ django = [
 django-ckeditor = [
     {file = "django-ckeditor-6.0.0.tar.gz", hash = "sha256:29fd1a333cb9741ac2c3fd4e427a5c00115ed33a2389716a09af7656022dcdde"},
     {file = "django_ckeditor-6.0.0-py2.py3-none-any.whl", hash = "sha256:cc2d377f1bdcd4ca1540caeebe85f7e2cd006198d57328ef6c718d3eaa5a0846"},
+]
+django-cors-headers = [
+    {file = "django-cors-headers-3.7.0.tar.gz", hash = "sha256:96069c4aaacace786a34ee7894ff680780ec2644e4268b31181044410fecd12e"},
+    {file = "django_cors_headers-3.7.0-py3-none-any.whl", hash = "sha256:1ac2b1213de75a251e2ba04448da15f99bcfcbe164288ae6b5ff929dc49b372f"},
 ]
 django-extensions = [
     {file = "django-extensions-3.1.2.tar.gz", hash = "sha256:081828e985485662f62a22340c1506e37989d14b927652079a5b7cd84a82368b"},
