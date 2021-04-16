@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views import View
 from rest_framework import viewsets, permissions
-from rest_framework.parsers import JSONParser
 
 from news.models import Post, Category, Comment
 from news.serializers import PostSerializer, \
