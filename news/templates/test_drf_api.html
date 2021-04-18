@@ -24,7 +24,7 @@
         var out = "";
         var i;
         for (i = 0; i < arr.length; i++) {
-            out += arr[i].title.bold() + '<br>' + arr[i].article + '<br>' + '<br>';
+            out += arr[i].title.bold() + '<br>' + arr[i].article + arr[i].created_at + '<br>' + '<br>';
         }
         document.getElementById('list_of_articles').innerHTML = out;
     }
