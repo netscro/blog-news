@@ -5,11 +5,6 @@ from news.models import Category, Post, Comment
 
 class CategorySerializer(serializers.ModelSerializer):
 
-    author = serializers.SlugRelatedField(
-        slug_field="username",
-        read_only=True
-    )
-
     class Meta:
         model = Category
         fields = "__all__"
