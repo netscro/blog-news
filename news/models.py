@@ -26,7 +26,11 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique=True, verbose_name="URL")
     article = RichTextUploadingField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.PROTECT,
+        related_name="posts",
+    )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="pictures", null=True, blank=True)
     publish = models.BooleanField(default=True)
@@ -51,7 +55,11 @@ class Post(models.Model):
 
 class Comment(models.Model):
     text = models.TextField(max_length=500, null=True)
-    for_news = models.ForeignKey(Post, on_delete=models.CASCADE)
+    for_news = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
