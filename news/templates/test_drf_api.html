@@ -9,7 +9,7 @@
 <script>
 
     var xmlhttp = new XMLHttpRequest();
-    var url = "{% url 'posts_api-list' %}"; <!-- Change to need url -->
+    var url = "{% url 'post-list' %}"; <!-- Change to need url -->
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
