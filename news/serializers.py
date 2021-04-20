@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 
 from news.models import Category, Post, Comment
 
@@ -23,7 +24,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-
+    # custom field to counter of comments
+    comments_count = SerializerMethodField()
+    # related comments to post
     comments = CommentSerializer(many=True)
 
     author = serializers.SlugRelatedField(
@@ -48,8 +51,13 @@ class PostSerializer(serializers.ModelSerializer):
             'publish',
             'seo_title',
             'seo_description',
+            'comments_count',
             'comments',
-        )
+         )
+
+    # calculate count of comments
+    def get_comments_count(self, obj):
+        return obj.comments.count()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
