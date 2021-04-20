@@ -42,6 +42,7 @@ class CommentAdmin(admin.ModelAdmin):
         "for_news",
         "author",
         "created_at",
+        "publish",
     )
 
 

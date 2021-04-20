@@ -62,6 +62,7 @@ class Comment(models.Model):
     )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
+    publish = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Comment"
