@@ -18,12 +18,6 @@ class CommentSerializer(serializers.ModelSerializer):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    # exclude comments where publish = False
-    def to_representation(self, instance):
-        comment = super().to_representation(instance)
-        if comment['publish']:
-            return comment
-
 
 # serializer for category with exclude fields
 class PostSerializerForCategory(serializers.ModelSerializer):
@@ -82,7 +76,6 @@ class PostSerializer(PostSerializerForCategory, serializers.ModelSerializer,):
 
 class CategorySerializer(serializers.ModelSerializer):
 
-    # posts = PostSerializer(many=True)
     posts = PostSerializerForCategory(many=True)
 
     class Meta:
