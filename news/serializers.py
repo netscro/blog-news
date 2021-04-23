@@ -18,21 +18,46 @@ class CommentSerializer(serializers.ModelSerializer):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    # exclude comments where publish = False
+    def to_representation(self, instance):
+        comment = super().to_representation(instance)
+        if comment['publish']:
+            return comment
 
-class PostSerializer(serializers.ModelSerializer):
-    # custom field to counter of comments
+
+# serializer for category with exclude fields
+class PostSerializerForCategory(serializers.ModelSerializer):
+    # counter of comments
     comments_count = SerializerMethodField()
-    # related comments to post
-    comments = CommentSerializer(many=True)
 
     author = serializers.SlugRelatedField(
         slug_field="username",
         read_only=True
     )
+
+    class Meta:
+        model = Post
+        fields = (
+            'title',
+            'slug',
+            'article',
+            'created_at',
+            'author',
+            'image',
+            'comments_count',
+        )
+
+    # calculate count of comments
+    def get_comments_count(self, obj):
+        return obj.comments.count()
+
+
+class PostSerializer(PostSerializerForCategory, serializers.ModelSerializer,):
+    # related comments to post
+    comments = CommentSerializer(many=True)
     category = serializers.SlugRelatedField(
-        slug_field="name",
-        read_only=True
-    )
+            slug_field="name",
+            read_only=True)
 
     class Meta:
         model = Post
@@ -49,11 +74,7 @@ class PostSerializer(serializers.ModelSerializer):
             'seo_description',
             'comments_count',
             'comments',
-         )
-
-    # calculate count of comments
-    def get_comments_count(self, obj):
-        return obj.comments.count()
+             )
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -61,7 +82,8 @@ class PostSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
 
-    posts = PostSerializer(many=True)
+    # posts = PostSerializer(many=True)
+    posts = PostSerializerForCategory(many=True)
 
     class Meta:
         model = Category
