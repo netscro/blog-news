@@ -9,7 +9,8 @@ from news.models import Category, Post, Comment
 class Command(BaseCommand):
 
     help = 'Add new post and comments in to the database. ' \
-           'Before run command you must create a superuser with name = admin'
+           'Before run command you must create a superuser with name = admin' \
+           'and create base category'
 
     def add_arguments(self, parser):
         """
