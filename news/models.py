@@ -1,6 +1,7 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 
@@ -51,6 +52,12 @@ class Post(models.Model):
     def image_display(self):
         return mark_safe(f'<img src={self.image.url} '
                          f'width="200" height="240" />')
+
+    # preview post link, opened in new window
+    def post_url(self):
+        return mark_safe(f'<a href="{reverse("post-list")}'
+                         f'{self.slug}" '
+                         f'target="_blank">Preview Post</a>')
 
 
 class Comment(models.Model):
