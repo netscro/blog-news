@@ -54,6 +54,7 @@ class PostSerializer(serializers.ModelSerializer):
             'seo_description',
             'comments_count',
               )
+        lookup_field = 'slug'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -68,6 +69,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+        lookup_field = 'slug'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

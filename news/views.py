@@ -14,6 +14,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+    # slug instead of id in single category url
+    lookup_field = 'slug'
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
@@ -24,6 +26,8 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.prefetch_related(Prefetch(
         'comments', queryset=Comment.objects.filter(publish=True)
     )).filter(publish=True)
+    # slug instead of id in single post url
+    lookup_field = 'slug'
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (
         DjangoFilterBackend,
