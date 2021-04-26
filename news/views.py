@@ -25,9 +25,10 @@ class PostViewSet(viewsets.ModelViewSet):
         'comments', queryset=Comment.objects.filter(publish=True)
     )).filter(publish=True)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filterset_fields = ('category',)
     search_fields = ('title', 'article',)
+    ordering_fields = ('title', 'created_at',)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
