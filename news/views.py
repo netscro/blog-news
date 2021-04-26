@@ -2,7 +2,7 @@ from django.db.models import Prefetch
 from django.shortcuts import render
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
 
 from news.models import Post, Category, Comment
 from news.serializers import PostSerializer, \
@@ -25,8 +25,9 @@ class PostViewSet(viewsets.ModelViewSet):
         'comments', queryset=Comment.objects.filter(publish=True)
     )).filter(publish=True)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ['category']
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filterset_fields = ('category',)
+    search_fields = ('title', 'article',)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -35,7 +36,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.filter(publish=True)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ['for_post']
+    filterset_fields = ('for_post',)
 
 
 class TestAPI(View):
