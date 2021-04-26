@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, pagination
 from rest_framework.fields import SerializerMethodField
 
 from news.models import Category, Post, Comment
@@ -11,16 +11,21 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    for_post = serializers.SlugRelatedField(
+        slug_field="title",
+        read_only=True
+    )
+
     class Meta:
         model = Comment
-        exclude = ('for_news',)
+        fields = '__all__'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 
-# serializer for category with exclude fields
-class PostSerializerForCategory(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
+
     # counter of comments
     comments_count = SerializerMethodField()
 
@@ -29,26 +34,6 @@ class PostSerializerForCategory(serializers.ModelSerializer):
         read_only=True
     )
 
-    class Meta:
-        model = Post
-        fields = (
-            'title',
-            'slug',
-            'article',
-            'created_at',
-            'author',
-            'image',
-            'comments_count',
-        )
-
-    # calculate count of comments
-    def get_comments_count(self, obj):
-        return obj.comments.count()
-
-
-class PostSerializer(PostSerializerForCategory, serializers.ModelSerializer,):
-    # related comments to post
-    comments = CommentSerializer(many=True)
     category = serializers.SlugRelatedField(
             slug_field="name",
             read_only=True)
@@ -56,6 +41,7 @@ class PostSerializer(PostSerializerForCategory, serializers.ModelSerializer,):
     class Meta:
         model = Post
         fields = (
+            'id',
             'title',
             'slug',
             'article',
@@ -67,27 +53,21 @@ class PostSerializer(PostSerializerForCategory, serializers.ModelSerializer,):
             'seo_title',
             'seo_description',
             'comments_count',
-            'comments',
-             )
+              )
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    # calculate count of comments
+    def get_comments_count(self, obj):
+        return obj.comments.count()
+
 
 class CategorySerializer(serializers.ModelSerializer):
 
-    posts = PostSerializerForCategory(many=True)
-
     class Meta:
         model = Category
-        fields = (
-            'name',
-            'slug',
-            'publish',
-            'seo_title',
-            'seo_description',
-            'posts',
-        )
+        fields = '__all__'
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

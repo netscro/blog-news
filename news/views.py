@@ -1,3 +1,4 @@
+from django.db.models import Prefetch
 from django.shortcuts import render
 from django.views import View
 from rest_framework import viewsets, permissions
@@ -18,7 +19,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
 
     serializer_class = PostSerializer
-    queryset = Post.objects.filter(publish=True)
+    # exclude comments with publish = False
+    queryset = Post.objects.prefetch_related(Prefetch(
+        'comments', queryset=Comment.objects.filter(publish=True)
+    )).filter(publish=True)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 

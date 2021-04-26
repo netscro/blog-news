@@ -55,7 +55,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     text = models.TextField(max_length=500, null=True)
-    for_news = models.ForeignKey(
+    for_post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
         related_name='comments',
@@ -71,4 +71,4 @@ class Comment(models.Model):
 
     def __str__(self):
         date_only = self.created_at.strftime("%d:%M-%Y")
-        return f"{self.for_news} - {date_only}"
+        return f"{self.for_post} - {date_only}"

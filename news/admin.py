@@ -39,7 +39,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = (
-        "for_news",
+        "for_post",
         "author",
         "created_at",
         "publish",
