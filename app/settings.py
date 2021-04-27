@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "corsheaders",
+    "drf_yasg",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

@@ -14,33 +14,54 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import routers, permissions
 
 from news.views import PostViewSet, CategoryViewSet, CommentViewSet, TestAPI
 
+# schema for swagger
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Blog-News",
+      default_version='v1',
+      description="",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.IsAuthenticatedOrReadOnly,),
+)
+
 # urls for drf
 router = routers.DefaultRouter()
-router.register(
-    r"category-api",
-    CategoryViewSet,
-)
-router.register(
-    r"posts-api",
-    PostViewSet,
-)
-router.register(
-    r"comments-api",
-    CommentViewSet,
-)
+router.register(r"category-api",
+                CategoryViewSet,)
+router.register(r"posts-api",
+                PostViewSet,)
+router.register(r"comments-api",
+                CommentViewSet,)
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("test/", TestAPI.as_view(), name='test'),
+
     # drf main page
     path("drf/", include(router.urls)),
+
+    # swagger page
+    url(r'^swagger(?P<format>\.json|\.yaml)',
+        schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/', schema_view.with_ui('swagger', cache_timeout=0),
+        name='schema-swagger-ui'),
+    url(r'^redoc/', schema_view.with_ui('redoc', cache_timeout=0),
+        name='schema-redoc'),
+
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
