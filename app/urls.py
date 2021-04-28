@@ -18,11 +18,12 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import routers, permissions
 
-from news.views import PostViewSet, CategoryViewSet, CommentViewSet, TestAPI
+from news.views import PostViewSet, CategoryViewSet, CommentViewSet
 
 # schema for swagger
 schema_view = get_schema_view(
@@ -49,8 +50,15 @@ router.register(r"comments-api",
 
 
 urlpatterns = [
+    path("", TemplateView.as_view(template_name="main_page.html"),
+         name='home'),
+    path("test/", TemplateView.as_view(template_name="test_drf_api.html"),
+         name='test'),
+    path("auth/", TemplateView.as_view(template_name="o_auth.html"),
+         name='oauth'),
+
+
     path("admin/", admin.site.urls),
-    path("test/", TestAPI.as_view(), name='test'),
 
     # drf main page
     path("drf/", include(router.urls)),

@@ -1,6 +1,4 @@
 from django.db.models import Prefetch
-from django.shortcuts import render
-from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, filters
 
@@ -46,8 +44,3 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('for_post',)
-
-
-class TestAPI(View):
-    def get(self, request):
-        return render(request, 'test_drf_api.html')
