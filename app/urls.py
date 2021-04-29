@@ -59,11 +59,9 @@ urlpatterns = [
     path("auth/", TemplateView.as_view(template_name="o_auth.html"),
          name='oauth'),
     # swagger login
-    path('accounts/logout/', LogOutUser.as_view(), name='logout',),
-
     path('accounts/login/', LoginSwaggerUser.as_view(),),
 
-
+    path('accounts/logout/', LogOutUser.as_view(), name='logout',),
 
     path("admin/", admin.site.urls),
 
