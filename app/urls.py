@@ -21,9 +21,11 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import routers, permissions
+from rest_framework import routers
 
-from news.views import PostViewSet, CategoryViewSet, CommentViewSet
+from app.utils import IsAdminUserOrReadOnly
+from news.views import PostViewSet, CategoryViewSet, CommentViewSet, \
+    LogOutUser, LoginSwaggerUser
 
 # schema for swagger
 schema_view = get_schema_view(
@@ -36,7 +38,7 @@ schema_view = get_schema_view(
       license=openapi.License(name="BSD License"),
    ),
    public=True,
-   permission_classes=(permissions.IsAuthenticatedOrReadOnly,),
+   permission_classes=(IsAdminUserOrReadOnly,),
 )
 
 # urls for drf
@@ -56,6 +58,11 @@ urlpatterns = [
          name='test'),
     path("auth/", TemplateView.as_view(template_name="o_auth.html"),
          name='oauth'),
+    # swagger login
+    path('accounts/logout/', LogOutUser.as_view(), name='logout',),
+
+    path('accounts/login/', LoginSwaggerUser.as_view(),),
+
 
 
     path("admin/", admin.site.urls),
