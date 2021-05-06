@@ -22,11 +22,8 @@ class Command(BaseCommand):
 
         faker = Faker()
 
-        all_posts = Post.objects.all()
-        list_post_name = [post.title for post in all_posts]
-
         all_categories = Category.objects.all()
-        list_category_name = [category.title for category in all_categories]
+        list_category_name = [category.name for category in all_categories]
 
         for new_post in range(options['len']):
             post = Post()
@@ -39,11 +36,14 @@ class Command(BaseCommand):
             post.category = Category.objects.get(name=choice(list_category_name)) # noqa
             post.author = User.objects.get(username='admin')
             post.seo_title = f'{post.title} | Read online | Blog news'.replace('.', '') # noqa
-            post.seo_description = f'{post.article}'
+            post.seo_description = f'{post.title} | Blog news.'
             post.save()
 
+            # create comments
+            all_posts = Post.objects.all()
+            list_post_name = [post.id for post in all_posts]
             comment = Comment()
             comment.text = faker.text()
-            comment.for_news = Post.objects.get(title=choice(list_post_name))
+            comment.for_post = Post.objects.get(id=choice(list_post_name))
             comment.author = User.objects.get(username='admin')
             comment.save()

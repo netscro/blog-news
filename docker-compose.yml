@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=${NAME}
+      - POSTGRES_USER=${USER}
+      - POSTGRES_PASSWORD=${PASSWORD}
+  web:
+    build: .
+    entrypoint: ./entrypoint.sh
+    restart: always
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - db
+    env_file:
+      - .env
