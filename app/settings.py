@@ -22,6 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_env_value("SECRET_KEY")
+# SECRET_KEY = 'c_o+4@civ!c-!4!*b!=2ibk$&jplg@tc76t-twm29c!t1_2(y('
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     "django_filters",
     "corsheaders",
     "drf_yasg",
+    "celery",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -155,3 +157,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10
 }
+
+# CELERY settings. Redis broker
+CELERY_BROKER_URL = "redis://redis:6379/1"
+CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
