@@ -33,3 +33,5 @@ services:
       - ./:/usr/src/app
     depends_on:
       - redis
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
